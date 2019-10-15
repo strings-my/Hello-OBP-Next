@@ -8,11 +8,11 @@ Then edit configuration file and paste the consumer key value.
 
 To login, use the username and password you noted above. After a successful login, you can check your account balance.
 
-pm run dev
-  Starts the development server.
+npm run dev  
+Starts the development server.
 
-npm run build
-  Builds the app for production.
+npm run build  
+Builds the app for production.
 
-npm start
-  Runs the built app in production mode.
+npm start  
+Runs the built app in production mode.
