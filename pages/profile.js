@@ -1,13 +1,7 @@
 import React from 'react'
-import Router from "next/router"
-import Head from 'next/head'
-import Nav from '../components/nav'
 import '../sass/style.scss';
 import fetch from 'isomorphic-unfetch';
-import jsCookie from 'js-cookie';
 import {getCookie} from "../utils/cookiesHandler";
-
-
 
 class Profile extends React.Component {
 
@@ -78,6 +72,5 @@ class Profile extends React.Component {
         )
     }
 }
-
 
 export default Profile

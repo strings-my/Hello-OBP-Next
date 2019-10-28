@@ -4,34 +4,29 @@ import Head from 'next/head'
 import '../sass/style.scss';
 import fetch from 'isomorphic-unfetch';
 
-const CONSUMER_KEY = "kuiknznqavm02ai452njrbko4zeqdvxecdhdlzbm";
-const CONSUMER_SECRET = "0ggkuodnqschn3jsbwbh20rw3ugtcchyskvbie2x";
-const STRING_ENDPOINT = "https://apisandbox.strings.my/my/";
-const OPENBANK_ENDPOINT = "https://apisandbox.openbankproject.com/my";
+import {setCookie} from "../utils/cookiesHandler"
+import getConfig from 'next/config'
 
-// Replace with internal API to cater CORS on OBP API
-// const doLogin = async () => {
-//     await fetch('https://apisandbox.openbankproject.com/my/logins/direct', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Authorization': 'DirectLogin username=Robert.Us.01,password=X!39670561,consumer_key=kuiknznqavm02ai452njrbko4zeqdvxecdhdlzbm'
-//         }
-//     }).then(function (response) {
-//         response.json().then(function (data) {
-//             console.log(data);
-//             return res.json(data)
-//         });
-//     });
-// }
+const {serverRuntimeConfig} = getConfig()
+
 
 const doLogin =  async () => {
-    await fetch('http://localhost:3000/api/login',
+
+
+    const data = {
+        'username' : document.getElementById("inUsername").value,
+        'password' : document.getElementById("inPassword").value
+    }
+
+    await fetch('/api/login',
     {
-        method: 'GET'
+        method: 'POST',
+        body:JSON.stringify(data)
     }).then(function (response) {
-        console.log(response);
-        Router.push('/profile')
+        console.log(response)
+        setCookie("token", response.token)   
+        // Router.push('/profile')
+        window.location.href = "/profile"
     })
 }
 
@@ -70,7 +65,7 @@ function Home() {
                             </form>
 
                             <div className="module-single-btn">
-                                <button type="submit" className="btn btn-primary" onClick={() => doLogin(true)} >Submit</button>
+                                <button type="submit" className="btn btn-primary" onClick={() => doLogin()} >Submit</button>
                             </div>
                         </section>
                     </div>
