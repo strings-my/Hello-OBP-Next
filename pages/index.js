@@ -1,43 +1,58 @@
 import React from 'react'
 import Router from "next/router"
 import Head from 'next/head'
-import Nav from '../components/nav'
 import '../sass/style.scss';
 import fetch from 'isomorphic-unfetch';
-import Link from 'next/link';
-import axios from 'axios';
-import { Cookies } from 'react-cookie';
-import Profile from "./profile";
+import jsCookie from 'js-cookie';
+import {getCookie, setCookie} from "../utils/cookiesHandler";
 
-const serverUrl = 'http://localhost:3001';
+const CONSUMER_KEY = "kuiknznqavm02ai452njrbko4zeqdvxecdhdlzbm";
+const CONSUMER_SECRET = "0ggkuodnqschn3jsbwbh20rw3ugtcchyskvbie2x";
+const STRING_ENDPOINT = "https://apisandbox.strings.my/my/";
+const OPENBANK_ENDPOINT = "https://apisandbox.openbankproject.com/my";
 
 // set up cookies
-const cookies = new Cookies();
+
 class Index extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            token: cookies.get('token') || null
-        }
+            token: ''};
     }
 
+    handleChange(token) {
+
+    }
 
     onLoginClick = async () => {
-        const res = await fetch(`https://apisandbox.strings.my/my/logins/direct`,
+        let inUsername = document.getElementById("inUsername").value;
+        let inPassword = document.getElementById("inPassword").value;
+        let endpoint = OPENBANK_ENDPOINT;
+        let consumer = CONSUMER_KEY;
+
+        console.log('DirectLogin username="'+String(inUsername)+'", password="'+String(inPassword)+'", consumer_key="'+String(consumer)+'"');
+
+        await fetch(String(endpoint)+'/logins/direct',
             {
-                method : 'POST',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'DirectLogin username="aizatrafee", password="OB@izat123", consumer_key="nbza2uddewxfhzcuryn4jinr0nkb21xh4dpejjds"'
+                    'Authorization': 'DirectLogin username="'+String(inUsername)+'",password="'+String(inPassword)+'",consumer_key="'+String(consumer)+'"'
                 }
-            });
+            }).then(function (response) {
+                response.json().then(function(data) {
+                    console.log(data);
+                    setCookie("token",data.token)
+                    }
+                );
 
-        const show = await res.json();
+            if (response.ok) {
+                Router.push('/profile')
+            }
 
-        console.log(`Fetched show: ${show.token}`);
-
-        return <Profile/>};
+        });
+    };
 
     render() {
         return (
@@ -61,10 +76,10 @@ class Index extends React.Component {
 
                                 <form className="login-form" method="post">
                                     <div className="form-group">
-                                        <input type="text" className="form-control login-input" placeholder="Login"/>
+                                        <input id="inUsername" type="text" className="form-control login-input" placeholder="Login"/>
                                     </div>
                                     <div className="form-group">
-                                        <input type="password" className="form-control password-input" placeholder="Password"/>
+                                        <input id="inPassword" type="password" className="form-control password-input" placeholder="Password"/>
                                     </div>
                                     <div className="checkbox">
                                         <label>
