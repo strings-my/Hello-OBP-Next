@@ -5,13 +5,12 @@ import '../sass/style.scss';
 import fetch from 'isomorphic-unfetch';
 import jsCookie from 'js-cookie';
 import {getCookie, setCookie} from "../utils/cookiesHandler";
+import Cors from 'micro-cors'
 
 const CONSUMER_KEY = "kuiknznqavm02ai452njrbko4zeqdvxecdhdlzbm";
 const CONSUMER_SECRET = "0ggkuodnqschn3jsbwbh20rw3ugtcchyskvbie2x";
 const STRING_ENDPOINT = "https://apisandbox.strings.my/my/";
 const OPENBANK_ENDPOINT = "https://apisandbox.openbankproject.com/my";
-
-// set up cookies
 
 class Index extends React.Component {
 
@@ -33,7 +32,7 @@ class Index extends React.Component {
 
         console.log('DirectLogin username="'+String(inUsername)+'", password="'+String(inPassword)+'", consumer_key="'+String(consumer)+'"');
 
-        await fetch(String(endpoint)+'/logins/direct',
+        await fetch('/login',
             {
                 method: 'POST',
                 headers: {
