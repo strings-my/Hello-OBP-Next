@@ -3,11 +3,15 @@ import Router from "next/router"
 import Head from 'next/head'
 import '../sass/style.scss';
 import fetch from 'isomorphic-unfetch';
+import {setCookie} from "../utils/cookiesHandler"
+import getConfig from 'next/config'
 
 const CONSUMER_KEY = "kuiknznqavm02ai452njrbko4zeqdvxecdhdlzbm";
 const CONSUMER_SECRET = "0ggkuodnqschn3jsbwbh20rw3ugtcchyskvbie2x";
 const STRING_ENDPOINT = "https://apisandbox.strings.my/my/";
 const OPENBANK_ENDPOINT = "https://apisandbox.openbankproject.com/my";
+const {serverRuntimeConfig} = getConfig()
+
 
 // Replace with internal API to cater CORS on OBP API
 // const doLogin = async () => {
@@ -26,12 +30,14 @@ const OPENBANK_ENDPOINT = "https://apisandbox.openbankproject.com/my";
 // }
 
 const doLogin =  async () => {
-    await fetch('http://localhost:3000/api/login',
+    await fetch('/api/login',
     {
         method: 'GET'
     }).then(function (response) {
-        console.log(response);
-        Router.push('/profile')
+        console.log(response)
+        setCookie("token", response.token)   
+        // Router.push('/profile')
+        window.location.href = "/profile"
     })
 }
 
@@ -70,7 +76,7 @@ function Home() {
                             </form>
 
                             <div className="module-single-btn">
-                                <button type="submit" className="btn btn-primary" onClick={() => doLogin(true)} >Submit</button>
+                                <button type="submit" className="btn btn-primary" onClick={() => doLogin()} >Submit</button>
                             </div>
                         </section>
                     </div>
