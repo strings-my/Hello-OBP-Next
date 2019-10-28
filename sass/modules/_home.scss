@@ -1,0 +1,45 @@
+.home {
+   max-width: 500px;
+
+   h1 {
+      margin-top: 0;
+      text-align: center;
+      font-size: 34px;
+   }
+}
+
+.home-header {
+   margin-bottom: 20px;
+}
+
+.home-features {
+   display: flex;
+   justify-content: space-between;
+
+   .home-image, .home-text {
+      flex: 1;
+   }
+}
+
+.home-image { display: none; }
+
+.home-cta {
+   text-align: center;
+   margin-top: 20px;
+}
+
+@media (min-width: $screen-md-min) {
+   .home {
+      max-width: 900px;
+
+      h1 {
+         font-size: 60px;
+      }
+   }
+
+   .home-image { display: inline; }
+
+   .home-text {
+      margin-left: 25px;
+   }
+}
