@@ -4,9 +4,11 @@
 import cookie from 'js-cookie';
 
 export const setCookie = (key, value) => {
-    if (process.browser) {
-        cookie.set(key, value);
-    }
+    console.log("set "+value)
+    console.log("set "+key)
+
+    cookie.set(key, value);
+    console.log("berjaya set cookie "+String(cookie.get(key)))
 };
 
 export const removeCookie = (key) => {
@@ -18,9 +20,7 @@ export const removeCookie = (key) => {
 };
 
 export const getCookie = (key, req) => {
-    return process.browser
-        ? getCookieFromBrowser(key)
-        : getCookieFromServer(key, req);
+    return getCookieFromBrowser(key)
 };
 
 const getCookieFromBrowser = key => {

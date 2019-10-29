@@ -1,25 +1,26 @@
 
 import getConfig from 'next/config'
-const {serverRuntimeConfig} = getConfig()
+import {error} from "next/dist/build/output/log";
+import {setCookie} from "../../utils/cookiesHandler";
+const {serverRuntimeConfig} = getConfig();
 
 async function Login(req, res) {
+    let API_HOST = serverRuntimeConfig.API_HOST;
+    let CONSUMER_KEY = serverRuntimeConfig.CONSUMER_KEY;
 
-    let API_HOST = serverRuntimeConfig.API_HOST
-    let CONSUMER_KEY = serverRuntimeConfig.CONSUMER_KEY
-
-    console.log("Host : " + API_HOST)
-    console.log("Key : " + CONSUMER_KEY)
     const fetch = require("node-fetch");
-    const response = await fetch(API_HOST + '/my/logins/direct', {
+    await fetch(API_HOST + '/my/logins/direct', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'DirectLogin username=Robert.Us.01,password=X!39670561,consumer_key=' + CONSUMER_KEY
+            'Authorization': 'DirectLogin username='+req.body.username+',password='+req.body.password+',consumer_key=' + CONSUMER_KEY
         }
     }).then(function (response) {
         response.json().then(function (data) {
-            console.log(data);
-            return res.json(data)
+            if(response.ok)
+                return res.json(data)
+            else
+                return res.json(error())
         });
     });
 }

@@ -9,8 +9,7 @@ async function GetAccount(req, res) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            // 'Authorization': 'DirectLogin token="'+getCookie("token")+'"'
-            'Authorization': 'DirectLogin token=eyJhbGciOiJIUzI1NiJ9.eyIiOiIifQ.qky_1qciudLAzFnaupjPuJj1LKtDUZbYYXXKwDDkUSE'
+            'Authorization': 'DirectLogin token="'+getCookie("token")+'"'
         }
     }).then(function (response) {
         response.json().then(function (data) {

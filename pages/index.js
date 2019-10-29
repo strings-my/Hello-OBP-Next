@@ -3,30 +3,30 @@ import Router from "next/router"
 import Head from 'next/head'
 import '../sass/style.scss';
 import fetch from 'isomorphic-unfetch';
-
-import {setCookie} from "../utils/cookiesHandler"
+import {getCookie, setCookie} from "../utils/cookiesHandler"
 import getConfig from 'next/config'
-
-const {serverRuntimeConfig} = getConfig()
-
+const {serverRuntimeConfig} = getConfig();
 
 const doLogin =  async () => {
-
 
     const data = {
         'username' : document.getElementById("inUsername").value,
         'password' : document.getElementById("inPassword").value
-    }
+    };
 
     await fetch('/api/login',
     {
         method: 'POST',
-        body:JSON.stringify(data)
+        body:JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        }
     }).then(function (response) {
-        console.log(response)
-        setCookie("token", response.token)   
-        // Router.push('/profile')
-        window.location.href = "/profile"
+        response.json().then(function(data) {
+                setCookie("token",data.token)
+            }
+        );
+        Router.push('/profile')
     })
 }
 
