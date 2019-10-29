@@ -52,10 +52,10 @@ function Home() {
 
                             <form className="login-form" method="post">
                                 <div className="form-group">
-                                    <input id="inUsername" type="text" className="form-control login-input" placeholder="Login" />
+                                    <input id="inUsername" type="text" className="form-control login-input" placeholder="Robert.Us.01" />
                                 </div>
                                 <div className="form-group">
-                                    <input id="inPassword" type="password" className="form-control password-input" placeholder="Password" />
+                                    <input id="inPassword" type="password" className="form-control password-input" placeholder="X!39670561" />
                                 </div>
                                 <div className="checkbox">
                                     <label>
