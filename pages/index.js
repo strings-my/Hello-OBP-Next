@@ -1,6 +1,9 @@
-// import React from 'react'
+import React from 'react'
 import Router from "next/router"
 import Head from 'next/head'
+
+
+// Bootstrap Sass
 import '../sass/style.scss';
 import fetch from 'isomorphic-unfetch';
 import {getCookie, setCookie} from "../utils/cookiesHandler"
