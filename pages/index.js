@@ -2,7 +2,6 @@ import React from 'react'
 import Router from "next/router"
 import Head from 'next/head'
 
-
 // Bootstrap Sass
 import '../sass/style.scss';
 import fetch from 'isomorphic-unfetch';
@@ -10,71 +9,39 @@ import {getCookie, setCookie} from "../utils/cookiesHandler"
 import getConfig from 'next/config'
 const {serverRuntimeConfig} = getConfig();
 
-const doLogin =  async () => {
-
-    const data = {
-        'username' : document.getElementById("inUsername").value,
-        'password' : document.getElementById("inPassword").value
-    };
-
-    await fetch('/api/login',
-    {
-        method: 'POST',
-        body:JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    }).then(function (response) {
-        response.json().then(function(data) {
-                setCookie("token",data.token)
-            }
-        );
-        Router.push('/profile')
-    })
+const navigateLogin =  async () => {
+    await Router.push('/login')
 }
 
+const navigateSignUp =  async () => {
+    await Router.push('/signUp')
+}
 function Home() {
-    return (
-        <div>
-            <Head>
-                <title>Login</title>
-                <link rel='icon' href='/favicon.ico' />
-                <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet" />
-                <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-            </Head>
-            <div className="container">
-                <div className="row">
-                    <div className="col-xs-12">
-                        <section className="login module">
-                            <section className="login-icon">
-                                <div className="icon-container">
-                                    <img src="/login-icon.png" className="img-responsive"
-                                        alt="Login icon" />
-                                </div>
-                            </section>
+    return(
+    <div>
+        <Head>
+            <title>Home</title>
+            <link rel='icon' href='/favicon.ico' />
+            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&amp;subset=latin-ext" rel="stylesheet" />
+            <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+        </Head>
+        <div className="container">
+            <div className="row">
+                <div className="col-xs-12">
+                    <section className="login module">
+                        <h1>Welcome to Strings</h1>
+                        <h3>Future of banking</h3>
 
-                            <form className="login-form" method="post">
-                                <div className="form-group">
-                                    <input id="inUsername" type="text" className="form-control login-input" placeholder="Robert.Us.01" />
-                                </div>
-                                <div className="form-group">
-                                    <input id="inPassword" type="password" className="form-control password-input" placeholder="X!39670561" />
-                                </div>
-                                <div className="checkbox">
-                                    <label>
-                                        <input type="checkbox" /> Keep me signed in
-                                </label>
-                                </div>
-                            </form>
+                        <div className="module-double-btn">
+                            <button  className="btn btn-primary" onClick={() => navigateLogin()} >Login</button>
+                            <button  className="btn btn-primary" onClick={() => navigateSignUp()} >SignUp</button>
 
-                            <div className="module-single-btn">
-                                <button type="submit" className="btn btn-primary" onClick={() => doLogin()} >Submit</button>
-                            </div>
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
             </div>
-            <style jsx>{`
+        </div>
+        <style jsx>{`
                 .login {
                     max-width: 365px;
                     padding-bottom: 0;
@@ -125,9 +92,8 @@ function Home() {
                 }
 
                 `}
-            </style>
-        </div>
-    )
+        </style>
+    </div>
+)
 }
-
 export default Home;
